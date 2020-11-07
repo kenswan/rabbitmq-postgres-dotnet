@@ -5,6 +5,7 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 ## Pre-Requisites
 
 - Docker
+- .NET Core 3.1
 
 ## Installation
 
