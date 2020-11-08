@@ -5,6 +5,7 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 ## Pre-Requisites
 
 - Docker
+- Postgres
 - .NET Core 3.1
 
 ## Configuration
@@ -22,6 +23,13 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 - Create new message queue
 - Copy `appsettings.json` into a new `appsettings.Development.json` file in the same location
 - Copy your newly create properties in the corresponding fields in `RabbitMQ` section
+
+### Postgres
+
+- Install Postgres
+  `docker run --rm --name postgres-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres`
+- Add appropriate credentials to appsettings.Development.json in `DefaultConnection` under `ConnectionStrings`
+  ex. `Server=localhost,<port>;Database=MessageAppDb;User=<username>;Password=<password>;`
 
 ## Known Issues
 
