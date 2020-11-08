@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MessengerApp.Api.Models;
 using MessengerApp.Api.Providers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerApp.Api.Controllers
@@ -22,9 +24,13 @@ namespace MessengerApp.Api.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async ValueTask<ActionResult<Message>> Post([FromBody] Message message)
         {
-            this.messagingProvider.SendMessage(new Message { Body = value });
+            var completedMessage = await this.messagingProvider.SendMessage(message);
+
+            return Ok(completedMessage);
         }
     }
 }

@@ -37,6 +37,7 @@ namespace MessengerApp.Api
                     client.BaseAddress = new Uri($"http://{rmq.UserName}:{rmq.Password}@{rmq.HostName}:{rmq.Port}");
                 });
 
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +48,14 @@ namespace MessengerApp.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
+            app.UseSwagger();
+
+            app.UseSwaggerUI(config =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "Message App API");
+            });
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
