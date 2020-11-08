@@ -29,7 +29,7 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 - Install Postgres
   `docker run --rm --name postgres-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres`
 - Add appropriate credentials to appsettings.Development.json in `DefaultConnection` under `ConnectionStrings`
-  ex. `Server=localhost,<port>;Database=MessageAppDb;User=<username>;Password=<password>;`
+  ex. `Host=localhost;Port=<port>;Database=MessageAppDb;Username=<username>;Password=<password>;`
 
 ## Known Issues
 
