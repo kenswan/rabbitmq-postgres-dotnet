@@ -25,7 +25,7 @@ namespace MessengerApp.Api
         {
             services.AddControllers();
 
-            services.AddDbContext<StorageProvider>(options =>
+            services.AddDbContext<IStorageProvider, StorageProvider>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<RabbitMQConfig>(Configuration.GetSection("RabbitMQ"));
