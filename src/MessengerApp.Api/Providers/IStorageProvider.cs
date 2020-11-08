@@ -7,5 +7,7 @@ namespace MessengerApp.Api.Providers
     public interface IStorageProvider
     {
         ValueTask<User> AddUser(User user);
+
+        ValueTask<DirectMessage> AddMessage(DirectMessage directMessage);
     }
 }

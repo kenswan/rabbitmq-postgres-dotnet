@@ -11,10 +11,14 @@ namespace MessengerApp.Api.Controllers
     public class MessageController : Controller
     {
         private readonly IMessagingProvider messagingProvider;
+        private readonly IStorageProvider storageProvider;
 
-        public MessageController(IMessagingProvider messagingProvider)
+        public MessageController(
+            IMessagingProvider messagingProvider,
+            IStorageProvider storageProvider)
         {
             this.messagingProvider = messagingProvider;
+            this.storageProvider = storageProvider;
         }
 
         [HttpGet]
@@ -26,11 +30,20 @@ namespace MessengerApp.Api.Controllers
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async ValueTask<ActionResult<Message>> Post([FromBody] Message message)
+        public async ValueTask<ActionResult<SentMessage>> Post([FromBody] Message message)
         {
-            var completedMessage = await this.messagingProvider.SendMessage(message);
+            // var completedMessage = await this.messagingProvider.SendMessage(message);
 
-            return Ok(completedMessage);
+            var newMessage = new DirectMessage
+            {
+                RecipientId = message.Recipient,
+                SenderId = message.Sender,
+                Text = message.Body
+            };
+
+            var sentMessage = await this.storageProvider.AddMessage(newMessage);
+
+            return Ok(new SentMessage(sentMessage));
         }
     }
 }
