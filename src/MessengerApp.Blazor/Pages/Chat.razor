@@ -1,0 +1,20 @@
+﻿
+<div>
+    Write Message:
+    <input @bind="currentMessage" />
+    <button @onclick="SendMessageEvent">Send</button>&nbsp;&nbsp;
+    <button @onclick="RefreshMessagesEvent">Refresh</button>
+</div>
+<div id="chat-box">
+    @if (messages.Count() > 0)
+    {
+        @foreach (var message in messages)
+        {
+            <p><b>@message.Sender</b>:&nbsp;<i>@message.Body</i></p>
+        }
+    }
+    else
+    {
+        <i>No Messages Available</i>
+    }
+</div>

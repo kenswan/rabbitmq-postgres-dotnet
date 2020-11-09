@@ -1,0 +1,25 @@
+﻿@page "/"
+
+@if (currentUser != null)
+{
+    <div>
+        <p><i>Welcome, @currentUser.UserName!</i></p>
+        <div id="contact-list">
+            <Contacts User="@currentUser" SelectContact="@GetMessagesForContactById" />
+        </div>
+        @if (selectedContact != null)
+        {
+            <div id="chat-list">
+                <Chat User="@currentUser" CurrentContact="@selectedContact" />
+            </div>
+        }
+        else
+        {
+            <i>No conversations selected</i>
+        }
+    </div>
+}
+else
+{
+    <div>Username: <input @bind="Username" /><br /><button @onclick="@(e => LoginUser(e))">Login</button></div>
+}

@@ -1,0 +1,8 @@
+﻿<h3>Contacts</h3>
+<ul>
+    @foreach (var contact in contacts)
+    {
+        <li><a href="" @onclick="@(e => SelectContactOnClick(e, contact))">@contact.UserName</a></li>
+    }
+</ul>
+
