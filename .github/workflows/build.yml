@@ -26,4 +26,4 @@ jobs:
       
     - name: Test
       working-directory: ./test/MessengerApp.Api.Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --filter Traits=Integration --no-restore --verbosity normal
