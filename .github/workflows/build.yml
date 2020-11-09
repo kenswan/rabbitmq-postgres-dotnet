@@ -17,13 +17,13 @@ jobs:
       run: dotnet restore
       
     - name: Build API
-      working-directory: ./src/MessageApp.Api
+      working-directory: ./src/MessengerApp.Api
       run: dotnet build --configuration Release --no-restore
       
     - name: Build UI
-      working-directory: ./src/MessageApp.Blazor
+      working-directory: ./src/MessengerApp.Blazor
       run: dotnet build --configuration Release --no-restore
       
     - name: Test
-      working-directory: ./test/MessageApp.Api.Test
+      working-directory: ./test/MessengerApp.Api.Test
       run: dotnet test --no-restore --verbosity normal
