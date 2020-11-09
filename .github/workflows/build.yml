@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  Acceptance:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+          
+    - name: Install dependencies
+      working-directory: ./
+      run: dotnet restore
+      
+    - name: Build API
+      working-directory: ./src/MessageApp.Api
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Build UI
+      working-directory: ./src/MessageApp.Blazor
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test
+      working-directory: ./test/MessageApp.Api.Test
+      run: dotnet test --no-restore --verbosity normal
