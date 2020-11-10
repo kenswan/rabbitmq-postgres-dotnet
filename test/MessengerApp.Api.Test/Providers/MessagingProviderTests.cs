@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MessengerApp.Api.Models;
 using MessengerApp.Api.Providers;
 using Xunit;
@@ -20,10 +21,10 @@ namespace MessengerApp.Api.Test.Providers
 
         [Fact(DisplayName = "Integration: should send message to queue")]
         [Trait("Category", "Integration")]
-        public void ShouldSendMessage()
+        public async Task ShouldSendMessage()
         {
             // RabbitMQ.Client.Exceptions.BrokerUnreachableException will throw if no connection
-            var message = messagingProvider.SendMessage(new Message { Body = "Test Message" });
+            var message = await messagingProvider.SendMessage(new Message { Body = "Test Message" });
 
             Assert.NotNull(message);
         }
