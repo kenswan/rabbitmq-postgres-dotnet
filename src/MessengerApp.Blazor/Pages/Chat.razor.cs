@@ -55,10 +55,11 @@ namespace MessengerApp.Blazor.Pages
 
         private void BroadcastMessage(string userId, Message message)
         {
-            if (userId.Equals(User.Id, StringComparison.OrdinalIgnoreCase))
+            // Ensure message is for current user and from current contact
+            if (userId.Equals(User.Id, StringComparison.OrdinalIgnoreCase) &&
+                message.SenderId.Equals(CurrentContact.Id, StringComparison.OrdinalIgnoreCase))
             {
                 messages.Add(message);
-
 
                 StateHasChanged();
             }
