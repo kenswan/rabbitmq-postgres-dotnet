@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MessengerApp.Blazor.Data;
 using MessengerApp.Blazor.Services;
+using MessengerApp.Blazor.Models;
+using System;
 
 namespace MessengerApp.Blazor
 {
@@ -23,7 +24,13 @@ namespace MessengerApp.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+
+            var appSettings = new AppSettings();
+            Configuration.GetSection(nameof(AppSettings)).Bind(appSettings);
+
+            services.AddHttpClient<IRestClient, RestClient>(client =>
+                client.BaseAddress = new Uri(appSettings.ApiBaseUrl));
+
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IUserService, UserService>();
         }
