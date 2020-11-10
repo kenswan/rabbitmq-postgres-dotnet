@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using MessengerApp.Blazor.Services;
 using MessengerApp.Blazor.Models;
 using System;
+using MessengerApp.Blazor.Providers;
 
 namespace MessengerApp.Blazor
 {
@@ -58,6 +59,7 @@ namespace MessengerApp.Blazor
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapHub<MessengerAppHubProvider>(MessengerAppHubProvider.HubUrl);
             });
         }
     }
