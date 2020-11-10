@@ -1,6 +1,9 @@
 using System;
+using System.IO;
+using System.Reflection;
 using MessengerApp.Api.Models;
 using MessengerApp.Api.Providers;
+using MessengerApp.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace MessengerApp.Api
 {
@@ -30,6 +34,9 @@ namespace MessengerApp.Api
 
             services.Configure<RabbitMQConfig>(Configuration.GetSection("RabbitMQ"));
 
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IUserService, UserService>();
+
             services.AddHttpClient<IMessagingProvider, MessagingProviderHttp>(
                 (serviceProvider, client) =>
                 {
@@ -37,7 +44,15 @@ namespace MessengerApp.Api
                     client.BaseAddress = new Uri($"http://{rmq.UserName}:{rmq.Password}@{rmq.HostName}:{rmq.Port}");
                 });
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new OpenApiInfo { Title = "Messaging API", Version = "V1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+                config.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

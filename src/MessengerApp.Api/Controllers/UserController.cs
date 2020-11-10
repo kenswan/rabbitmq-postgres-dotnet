@@ -1,29 +1,39 @@
 ﻿using System.Threading.Tasks;
 using MessengerApp.Api.Models;
-using MessengerApp.Api.Providers;
+using MessengerApp.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MessengerApp.Api.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        public readonly IStorageProvider storageProvider;
+        public readonly IUserService userService;
+        public readonly ILogger<UserController> logger;
 
-        public UserController(IStorageProvider storageProvider)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
-            this.storageProvider = storageProvider;
+            this.userService = userService;
+            this.logger = logger;
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Retrieves user if existing or registers new user if not found
+        /// </summary>
+        /// <param name="username">Username of specified user</param>
+        /// <returns>Existing user or new user with the given username<see cref="User"/></returns>
+        [HttpPost("{username}/login")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async ValueTask<ActionResult<User>> Post([FromBody] User user)
+        public async ValueTask<ActionResult<User>> Login([FromRoute] string username)
         {
-            var newUser = await storageProvider.AddUser(user);
+            var user = userService.GetUserByUsername(username);
 
-            return Ok(newUser);
+            user ??= await userService.RegisterUserAsync(username);
+
+            return Ok(user);
         }
     }
 }

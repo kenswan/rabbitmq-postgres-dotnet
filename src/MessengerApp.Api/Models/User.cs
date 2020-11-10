@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MessengerApp.Api.Models
 {
@@ -11,8 +12,10 @@ namespace MessengerApp.Api.Models
 
         public string UserName { get; set; }
 
+        [JsonIgnore]
         public virtual IEnumerable<DirectMessage> ReceivedMessages { get; set; }
 
+        [JsonIgnore]
         public virtual IEnumerable<DirectMessage> SentMessages { get; set; }
     }
 }
