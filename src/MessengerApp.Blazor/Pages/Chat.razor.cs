@@ -53,5 +53,18 @@ namespace MessengerApp.Blazor.Pages
 
             messages = foundMessages.ToList();
         }
+
+        private string GetUserName(string userId)
+        {
+            switch (userId)
+            {
+                case { } when (userId == User.Id):
+                    return User.UserName;
+                case { } when (userId == CurrentContact.Id):
+                    return CurrentContact.UserName;
+                default:
+                    return "Unknown";
+            }
+        }
     }
 }

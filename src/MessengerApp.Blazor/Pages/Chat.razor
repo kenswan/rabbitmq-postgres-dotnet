@@ -10,7 +10,7 @@
     {
         @foreach (var message in messages)
         {
-            <p><b>@message.SenderId</b>:&nbsp;<i>@message.Text</i></p>
+            <p><b>@GetUserName(message.SenderId)</b>:&nbsp;<i>@message.Text</i></p>
         }
     }
     else
