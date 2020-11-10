@@ -5,12 +5,22 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 ## Pre-Requisites
 
 - Docker
-- Postgres
 - .NET Core 3.1
+- [Entity Framework Core Tools - CLI](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
 
 ## Configuration
 
-### RabbitMQ
+### Postgres
+
+- Install Postgres
+  `docker run --rm --name postgres-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres`
+- Add appropriate credentials to appsettings.Development.json in `DefaultConnection` under `ConnectionStrings`
+  ex. `Host=localhost;Port=<port>;Database=MessageAppDb;Username=<username>;Password=<password>;`
+- Run Database migration
+  - Navigate to `./src/MessageApp.Api`
+  - Run `dotnet ef database update`
+
+### <i>RabbitMQ (Coming Soon)</i>
 
 - Install RabbitMQ Community Docker Image ([Downloading and Installing RabbitMQ](https://www.rabbitmq.com/download.html))
 
@@ -23,13 +33,6 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 - Create new message queue
 - Copy `appsettings.json` into a new `appsettings.Development.json` file in the same location
 - Copy your newly create properties in the corresponding fields in `RabbitMQ` section
-
-### Postgres
-
-- Install Postgres
-  `docker run --rm --name postgres-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres`
-- Add appropriate credentials to appsettings.Development.json in `DefaultConnection` under `ConnectionStrings`
-  ex. `Host=localhost;Port=<port>;Database=MessageAppDb;Username=<username>;Password=<password>;`
 
 ## Known Issues
 
