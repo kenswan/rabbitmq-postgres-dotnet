@@ -21,6 +21,8 @@ namespace MessengerApp.Api.Services
 
         public User GetUserByUsername(string username)
         {
+            logger.LogInformation($"retrieving user by username {username}");
+
             return storageProvider
                 .SelectAllUsers()
                 .Where(user => user.UserName == username)
@@ -29,6 +31,8 @@ namespace MessengerApp.Api.Services
 
         public IEnumerable<User> GetUserContacts(Guid id)
         {
+            logger.LogInformation($"retrieving contacts for user {id}");
+
             return storageProvider
                 .SelectAllMessages()
                 .Where(message => message.RecipientId == id || message.SenderId == id) // Get converstations received or sent by user
@@ -39,6 +43,8 @@ namespace MessengerApp.Api.Services
 
         public async ValueTask<User> RegisterUserAsync(string username)
         {
+            logger.LogInformation($"register new user {username}");
+
             var user = new User { UserName = username };
 
             return await storageProvider.InsertUserAsync(user);

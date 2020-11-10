@@ -21,6 +21,8 @@ namespace MessengerApp.Api.Services
 
         public IEnumerable<DirectMessage> GetUserConversation(Guid userId, Guid contactId)
         {
+            logger.LogInformation($"retrieving conversation between user {userId} and user {contactId}");
+
             return storageProvider
                 .SelectAllMessages()
                 .Where(message => (message.RecipientId == userId && message.SenderId == contactId) ||
