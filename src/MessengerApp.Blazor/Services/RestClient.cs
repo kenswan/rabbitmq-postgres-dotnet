@@ -17,7 +17,7 @@ namespace MessengerApp.Blazor.Services
             this.logger = logger;
         }
 
-        public async ValueTask<T> GetContent<T>(string relativeUrl)
+        public async ValueTask<T> GetContentAsync<T>(string relativeUrl)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace MessengerApp.Blazor.Services
             }
         }
 
-        public async ValueTask<T> PostContent<T>(string relativeUrl, object data)
+        public async ValueTask<T> PostContentAsync<T>(string relativeUrl, object data)
         {
             try
             {

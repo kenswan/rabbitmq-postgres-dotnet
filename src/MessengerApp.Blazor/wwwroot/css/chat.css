@@ -3,6 +3,10 @@
     margin-right: 5%;
 }
 
+#new-contact-panel {
+    margin-top: 10%;
+}
+
 #chat-list {
     float: left;
 }

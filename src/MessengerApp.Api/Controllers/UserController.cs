@@ -40,7 +40,7 @@ namespace MessengerApp.Api.Controllers
         /// <summary>
         /// Retrieves contacts from all conversations for a given user
         /// </summary>
-        /// <param name="userId">Username of specified user</param>
+        /// <param name="userId">User Id of specified user</param>
         /// <returns>List of contacts from all conversations the user has had</returns>
         [HttpGet("{userId}/contact")]
         [Produces("application/json")]
@@ -50,6 +50,25 @@ namespace MessengerApp.Api.Controllers
             var contacts = userService.GetUserContacts(userId);
 
             return Ok(contacts);
+        }
+
+        /// <summary>
+        /// Retrieves user by a given username
+        /// </summary>
+        /// <param name="username">Username of specified user</param>
+        /// <returns>User with the given username</returns>
+        [HttpGet("{username}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<User> GetUser([FromRoute] string username)
+        {
+            var user = userService.GetUserByUsername(username);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
     }
 }

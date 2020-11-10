@@ -15,17 +15,10 @@ namespace MessengerApp.Blazor.Pages
         public Contact User { get; set; }
 
         [Parameter]
+        public IEnumerable<Contact> ContactList { get; set; }
+
+        [Parameter]
         public Action<Contact> SelectContact { get; set; }
-
-        [Inject]
-        private IUserService userService { get; set; }
-
-        private IEnumerable<Contact> contacts = Enumerable.Empty<Contact>();
-
-        protected override async Task OnInitializedAsync()
-        {
-            contacts = await userService.GetContactsAsync(User.Id);
-        }
 
         private void SelectContactOnClick(MouseEventArgs e, Contact contact)
         {

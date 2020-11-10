@@ -14,11 +14,10 @@ namespace MessengerApp.Blazor.Services
         }
 
         public async ValueTask<IEnumerable<Message>> GetMessagesAsync(string userId, string contactId) =>
-            await restClient.GetContent<IEnumerable<Message>>($"api/user/{userId}/message?contactId={contactId}");
+            await restClient.GetContentAsync<IEnumerable<Message>>($"api/user/{userId}/message?contactId={contactId}");
 
-        public ValueTask<Message> SendMessageAsync(Message message)
-        {
-            return new ValueTask<Message>(message);
-        }
+        public async ValueTask<Message> SendMessageAsync(string userId, string contactId, string text) =>
+            await restClient.PostContentAsync<Message>($"api/user/{userId}/message",
+                new MessageRequest { Recipient = contactId, Text = text });
     }
 }

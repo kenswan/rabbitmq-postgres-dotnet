@@ -9,5 +9,7 @@ namespace MessengerApp.Blazor.Services
         ValueTask<Contact> LogInUserByUserNameAsync(string username);
 
         ValueTask<IEnumerable<Contact>> GetContactsAsync(string userId);
+
+        ValueTask<Contact> GetUserAsync(string username);
     }
 }

@@ -5,7 +5,10 @@
     <div>
         <p><i>Welcome, @currentUser.UserName!</i></p>
         <div id="contact-list">
-            <Contacts User="@currentUser" SelectContact="@GetMessagesForContactById" />
+            <Contacts User="@currentUser" ContactList="@contacts" SelectContact="@GetMessagesForContactById" />
+            <div id="new-contact-panel">
+                New Contact: <input @bind="NewContact" /><br /><button @onclick="@(e => AddContactOnClick(e))">Add Contact</button>
+            </div>
         </div>
         @if (selectedContact != null)
         {
@@ -21,5 +24,5 @@
 }
 else
 {
-    <div>Username: <input @bind="Username" /><br /><button @onclick="@(e => LoginUser(e))">Login</button></div>
+    <div>Username: <input @bind="Username" /><br /><button @onclick="@(e => LoginUserOnClick(e))">Login</button></div>
 }

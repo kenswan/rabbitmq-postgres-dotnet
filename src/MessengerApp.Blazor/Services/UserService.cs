@@ -14,9 +14,12 @@ namespace MessengerApp.Blazor.Services
         }
 
         public async ValueTask<Contact> LogInUserByUserNameAsync(string username) =>
-            await restClient.PostContent<Contact>($"api/user/{username}/login", null);
+            await restClient.PostContentAsync<Contact>($"api/user/{username}/login", null);
 
         public async ValueTask<IEnumerable<Contact>> GetContactsAsync(string userId) =>
-            await restClient.GetContent<IEnumerable<Contact>>($"api/user/{userId}/contact");
+            await restClient.GetContentAsync<IEnumerable<Contact>>($"api/user/{userId}/contact");
+
+        public async ValueTask<Contact> GetUserAsync(string username) =>
+            await restClient.GetContentAsync<Contact>($"api/user/{username}");
     }
 }

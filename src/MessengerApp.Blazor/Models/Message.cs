@@ -3,8 +3,8 @@ namespace MessengerApp.Blazor.Models
 {
     public class Message
     {
-        public string Recipient { get; set; }
-        public string Sender { get; set; }
-        public string Body { get; set; }
+        public string RecipientId { get; set; }
+        public string SenderId { get; set; }
+        public string Text { get; set; }
     }
 }

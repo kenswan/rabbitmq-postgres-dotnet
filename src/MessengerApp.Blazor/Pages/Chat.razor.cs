@@ -28,15 +28,18 @@ namespace MessengerApp.Blazor.Pages
             await RefreshMessages();
         }
 
-        private void SendMessageEvent(MouseEventArgs e)
+        private async Task SendMessageEvent(MouseEventArgs e)
         {
-            messageService.SendMessageAsync(new Message { Sender = User.Id, Body = currentMessage, Recipient = CurrentContact.Id });
+            var message = await messageService.SendMessageAsync(User.Id, CurrentContact.Id, currentMessage);
 
-            messages.Add(new Message { Sender = User.UserName, Body = currentMessage, Recipient = CurrentContact.UserName });
+            if (message != null)
+            {
+                messages.Add(message);
 
-            currentMessage = "";
+                currentMessage = "";
 
-            StateHasChanged();
+                StateHasChanged();
+            }
         }
 
         private async Task RefreshMessagesEvent(MouseEventArgs e)

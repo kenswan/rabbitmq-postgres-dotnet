@@ -8,6 +8,6 @@ namespace MessengerApp.Blazor.Services
     {
         ValueTask<IEnumerable<Message>> GetMessagesAsync(string userId, string contactId);
 
-        ValueTask<Message> SendMessageAsync(Message message);
+        ValueTask<Message> SendMessageAsync(string userId, string contactId, string text);
     }
 }

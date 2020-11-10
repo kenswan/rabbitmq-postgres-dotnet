@@ -10,7 +10,7 @@
     {
         @foreach (var message in messages)
         {
-            <p><b>@message.Sender</b>:&nbsp;<i>@message.Body</i></p>
+            <p><b>@message.SenderId</b>:&nbsp;<i>@message.Text</i></p>
         }
     }
     else

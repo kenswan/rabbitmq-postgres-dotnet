@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MessengerApp.Blazor.Services
 {
     public interface IRestClient
     {
-        ValueTask<T> GetContent<T>(string url);
+        ValueTask<T> GetContentAsync<T>(string url);
 
-        ValueTask<T> PostContent<T>(string relativeUrl, object data);
+        ValueTask<T> PostContentAsync<T>(string relativeUrl, object data);
     }
 }
