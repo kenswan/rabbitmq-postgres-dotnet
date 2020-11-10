@@ -23,9 +23,19 @@ namespace MessengerApp.Api.Services
             throw new NotImplementedException();
         }
 
-        public ValueTask<SentMessage> SendMessageAsync(Guid userId, Guid contactId, string message)
+        public async ValueTask<DirectMessage> SendMessageAsync(Guid userId, Guid contactId, string message)
         {
-            throw new NotImplementedException();
+            logger.LogInformation($"sending message from user {userId} to user {contactId}");
+
+            var dm = new DirectMessage
+            {
+                RecipientId = contactId,
+                SenderId = userId,
+                Text = message,
+                Sent = DateTimeOffset.UtcNow
+            };
+
+            return await storageProvider.InsertMessageAsync(dm);
         }
     }
 }

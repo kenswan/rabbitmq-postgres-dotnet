@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MessengerApp.Api.Models;
 using MessengerApp.Api.Services;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,7 @@ namespace MessengerApp.Api.Controllers
         /// <returns>Existing user or new user with the given username<see cref="User"/></returns>
         [HttpPost("{username}/login")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         public async ValueTask<ActionResult<User>> Login([FromRoute] string username)
         {
             var user = userService.GetUserByUsername(username);
@@ -34,6 +35,21 @@ namespace MessengerApp.Api.Controllers
             user ??= await userService.RegisterUserAsync(username);
 
             return Ok(user);
+        }
+
+        /// <summary>
+        /// Retrieves contacts from all conversations for a given user
+        /// </summary>
+        /// <param name="userId">Username of specified user</param>
+        /// <returns>List of contacts from all conversations the user has had</returns>
+        [HttpPost("{userId}/contact")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<User> GetContacts([FromRoute] Guid userId)
+        {
+            var contacts = userService.GetUserContacts(userId);
+
+            return Ok(contacts);
         }
     }
 }

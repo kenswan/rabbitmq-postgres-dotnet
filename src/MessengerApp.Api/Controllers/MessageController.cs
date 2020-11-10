@@ -29,11 +29,11 @@ namespace MessengerApp.Api.Controllers
         /// </summary>
         /// <param name="userId">Sender's unique user Id</param>
         /// <param name="messageRequest">Message recipient and text sent from user</param>
-        /// <returns>Message confirmation with timestamp <see cref="SentMessage"/></returns>
+        /// <returns>Message confirmation with timestamp <see cref="DirectMessage"/></returns>
         [HttpPost("user/{userId}/message")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(SentMessage), StatusCodes.Status200OK)]
-        public async ValueTask<ActionResult<SentMessage>> PostMessage(
+        [ProducesResponseType(typeof(DirectMessage), StatusCodes.Status200OK)]
+        public async ValueTask<ActionResult<DirectMessage>> PostMessage(
             [FromRoute] Guid userId,
             [FromBody] MessageRequest messageRequest)
         {
@@ -53,7 +53,7 @@ namespace MessengerApp.Api.Controllers
         /// <returns>List of direct messages between user and contact</returns>
         [HttpGet("user/{userId}/message")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(SentMessage), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<DirectMessage>), StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<DirectMessage>> GetConversationWithContact(
             [FromRoute] Guid userId,
             [FromQuery, Required] Guid contactId)

@@ -9,6 +9,6 @@ namespace MessengerApp.Api.Services
     {
         IEnumerable<DirectMessage> GetUserConversation(Guid userId, Guid contactId);
 
-        ValueTask<SentMessage> SendMessageAsync(Guid userId, Guid contactId, string message);
+        ValueTask<DirectMessage> SendMessageAsync(Guid userId, Guid contactId, string message);
     }
 }
