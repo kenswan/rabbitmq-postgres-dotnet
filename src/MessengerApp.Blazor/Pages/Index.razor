@@ -3,7 +3,7 @@
 @if (currentUser != null)
 {
     <div>
-        <p><i>Welcome, @currentUser.UserName!</i></p>
+        <p>Welcome, <b><i>@currentUser.UserName</i></b></p>
         <div id="contact-list">
             <Contacts User="@currentUser" ContactList="@contacts" SelectContact="@GetMessagesForContactById" />
             <div id="new-contact-panel">
