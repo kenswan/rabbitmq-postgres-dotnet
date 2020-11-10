@@ -23,8 +23,9 @@ namespace MessengerApp.Blazor.Pages
 
         private string currentMessage = "";
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
+            // Refresh messages when params passed to component (new current contact)
             await RefreshMessages();
         }
 
