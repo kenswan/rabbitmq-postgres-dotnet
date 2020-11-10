@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
 using FluentAssertions;
@@ -14,12 +16,12 @@ namespace MessengerApp.Api.Test.Services
         public void ShouldGetExistingUserByUserName()
         {
             var inputUserName = new Faker().Internet.UserName();
-            var expectedUser = GetUser(inputUserName);
+            var expectedUser = GetUser(id: null, username: inputUserName);
             var userList = GetRandomUsers().ToList();
             userList.Add(expectedUser);
 
-            storageProviderMock.Setup(service =>
-                service.SelectAllUsers())
+            storageProviderMock.Setup(provider =>
+                provider.SelectAllUsers())
                 .Returns(userList.AsQueryable());
 
             var actualUser = userService.GetUserByUsername(inputUserName);
@@ -33,8 +35,8 @@ namespace MessengerApp.Api.Test.Services
             var inputUserName = new Faker().Internet.UserName();
             var userList = GetRandomUsers();
 
-            storageProviderMock.Setup(service =>
-                service.SelectAllUsers())
+            storageProviderMock.Setup(provider =>
+                provider.SelectAllUsers())
                 .Returns(userList.AsQueryable());
 
             var actualUser = userService.GetUserByUsername(inputUserName);
@@ -46,16 +48,42 @@ namespace MessengerApp.Api.Test.Services
         public async Task ShouldRegisterNewUser()
         {
             var inputUserName = new Faker().Internet.UserName();
-            var createdUser = GetUser(inputUserName);
+            var createdUser = GetUser(id: null, username: inputUserName);
 
-            storageProviderMock.Setup(service =>
-                service.InsertUserAsync(It.Is<User>(user =>
+            storageProviderMock.Setup(provider =>
+                provider.InsertUserAsync(It.Is<User>(user =>
                     user.UserName == inputUserName)))
                 .ReturnsAsync(createdUser);
 
             var actualUser = await userService.RegisterUserAsync(inputUserName);
 
             actualUser.Should().BeEquivalentTo(createdUser);
+        }
+
+        [Fact]
+        public void ShouldGetUserContacts()
+        {
+            var inputUser = GetUser();
+            var contactOne = GetUser();
+            var contactTwo = GetUser();
+            var contactThree = GetUser();
+
+            var expectedContacts = new List<User> { contactOne, contactTwo, contactThree };
+
+            var messageList = new List<DirectMessage>
+            {
+                GetDirectMessage(inputUser, contactOne),
+                GetDirectMessage(inputUser, contactTwo),
+                GetDirectMessage(inputUser, contactThree),
+            };
+
+            storageProviderMock.Setup(provider =>
+                provider.SelectAllMessages())
+                .Returns(messageList.AsQueryable());
+
+            var actualContacts = userService.GetUserContacts(inputUser.Id);
+
+            actualContacts.Should().BeEquivalentTo(expectedContacts);
         }
     }
 }

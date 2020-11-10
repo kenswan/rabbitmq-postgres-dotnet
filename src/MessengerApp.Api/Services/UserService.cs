@@ -29,7 +29,10 @@ namespace MessengerApp.Api.Services
 
         public IEnumerable<User> GetUserContacts(Guid id)
         {
-            throw new NotImplementedException();
+            return storageProvider
+                .SelectAllMessages()
+                .Where(message => message.RecipientId == id || message.SenderId == id) // Get converstations received or sent by user
+                .Select(message => message.RecipientId == id ? message.Sender : message.Recipient); // return other party within message
         }
 
         public async ValueTask<User> RegisterUserAsync(string username)
