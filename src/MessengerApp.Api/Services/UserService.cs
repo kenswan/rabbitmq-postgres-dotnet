@@ -32,7 +32,9 @@ namespace MessengerApp.Api.Services
             return storageProvider
                 .SelectAllMessages()
                 .Where(message => message.RecipientId == id || message.SenderId == id) // Get converstations received or sent by user
-                .Select(message => message.RecipientId == id ? message.Sender : message.Recipient); // return other party within message
+                .Select(message => message.RecipientId == id ? message.Sender : message.Recipient) // return other party within message
+                .ToList()
+                .Distinct(new UserComparer());
         }
 
         public async ValueTask<User> RegisterUserAsync(string username)

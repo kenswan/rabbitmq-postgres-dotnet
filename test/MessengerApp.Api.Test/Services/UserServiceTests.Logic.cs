@@ -85,5 +85,31 @@ namespace MessengerApp.Api.Test.Services
 
             actualContacts.Should().BeEquivalentTo(expectedContacts);
         }
+
+        [Fact]
+        public void ShouldGetUniqueUserContacts()
+        {
+            var inputUser = GetUser();
+            var contactOne = GetUser();
+            var contactTwo = GetUser();
+
+            var expectedContacts = new List<User> { contactOne, contactTwo };
+
+            var messageList = new List<DirectMessage>
+            {
+                GetDirectMessage(inputUser, contactOne),
+                GetDirectMessage(contactOne, inputUser),
+                GetDirectMessage(inputUser, contactTwo),
+                GetDirectMessage(contactTwo, inputUser)
+            };
+
+            storageProviderMock.Setup(provider =>
+                provider.SelectAllMessages())
+                .Returns(messageList.AsQueryable());
+
+            var actualContacts = userService.GetUserContacts(inputUser.Id);
+
+            actualContacts.Should().BeEquivalentTo(expectedContacts);
+        }
     }
 }
