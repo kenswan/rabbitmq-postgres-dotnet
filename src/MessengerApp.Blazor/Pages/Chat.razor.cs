@@ -105,5 +105,13 @@ namespace MessengerApp.Blazor.Pages
                     return "Unknown";
             }
         }
+
+        private bool IsCurrentUser(string userId) =>
+            userId == User.Id;
+
+        private string GetDateDisplay(DateTimeOffset dateTime)
+        {
+            return dateTime.ToString();
+        }
     }
 }

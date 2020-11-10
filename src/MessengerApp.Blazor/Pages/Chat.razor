@@ -10,7 +10,10 @@
     {
         @foreach (var message in messages)
         {
-            <p><b>@GetUserName(message.SenderId)</b>:&nbsp;<i>@message.Text</i></p>
+            <p class="@(IsCurrentUser(message.SenderId) ? "sender" : "recipient")">
+                <b>@GetUserName(message.SenderId)</b>:&nbsp;<span class="message-text"><i>@message.Text</i></span><br />
+                <span class="message-sent">@GetDateDisplay(message.Sent)</span>
+            </p>
         }
     }
     else

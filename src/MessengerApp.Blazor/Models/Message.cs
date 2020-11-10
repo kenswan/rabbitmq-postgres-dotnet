@@ -6,5 +6,6 @@ namespace MessengerApp.Blazor.Models
         public string RecipientId { get; set; }
         public string SenderId { get; set; }
         public string Text { get; set; }
+        public DateTimeOffset Sent { get; set; }
     }
 }
