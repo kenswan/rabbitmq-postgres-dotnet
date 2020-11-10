@@ -7,7 +7,9 @@
         <div id="contact-list">
             <Contacts User="@currentUser" ContactList="@contacts" SelectContact="@GetMessagesForContactById" />
             <div id="new-contact-panel">
-                New Contact: <input @bind="NewContact" /><br /><button @onclick="@(e => AddContactOnClick(e))">Add Contact</button>
+                New Contact:<br />
+                <input class="form-control" @bind="NewContact" /><br />
+                <button type="button" class="btn btn-secondary" @onclick="@(e => AddContactOnClick(e))">Add Contact</button>
             </div>
         </div>
         @if (selectedContact != null)
@@ -24,5 +26,8 @@
 }
 else
 {
-    <div>Username: <input @bind="Username" /><br /><button @onclick="@(e => LoginUserOnClick(e))">Login</button></div>
+    <div>
+        Username: <input class="form-control col-md-6" @bind="Username" /><br />
+        <button type="button" class="btn btn-primary" @onclick="@(e => LoginUserOnClick(e))">Login</button>
+    </div>
 }

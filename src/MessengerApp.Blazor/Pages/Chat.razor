@@ -1,9 +1,9 @@
 ﻿
-<div>
+<div id="send-message">
     Write Message:
-    <input @bind="currentMessage" />
-    <button @onclick="SendMessageEvent">Send</button>&nbsp;&nbsp;
-    <button @onclick="RefreshMessagesEvent">Refresh</button>
+    <input class="form-control" @bind="currentMessage" />
+    <button type="button" class="btn btn-primary" @onclick="SendMessageEvent">Send</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-secondary" @onclick="RefreshMessagesEvent">Refresh</button>
 </div>
 <div id="chat-box">
     @if (messages.Count() > 0)
