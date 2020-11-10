@@ -11,18 +11,6 @@ namespace MessengerApp.Blazor.Services
         {
         }
 
-        public ValueTask<IEnumerable<Contact>> GetContactsAsync(string userId)
-        {
-            var contacts = new List<Contact>
-            {
-                new Contact { Id = "123456", UserName = "kswan1" },
-                new Contact { Id = "123457", UserName = "kswan2" },
-                new Contact { Id = "123458", UserName = "kswan3" },
-            };
-
-            return new ValueTask<IEnumerable<Contact>>(contacts);
-        }
-
         public ValueTask<IEnumerable<Message>> GetMessagesAsync(string userId, string contactId)
         {
             var messages = new List<Message>

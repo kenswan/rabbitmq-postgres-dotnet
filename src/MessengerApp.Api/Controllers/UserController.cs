@@ -42,7 +42,7 @@ namespace MessengerApp.Api.Controllers
         /// </summary>
         /// <param name="userId">Username of specified user</param>
         /// <returns>List of contacts from all conversations the user has had</returns>
-        [HttpPost("{userId}/contact")]
+        [HttpGet("{userId}/contact")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<User> GetContacts([FromRoute] Guid userId)

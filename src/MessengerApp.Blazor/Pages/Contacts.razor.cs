@@ -18,13 +18,13 @@ namespace MessengerApp.Blazor.Pages
         public Action<Contact> SelectContact { get; set; }
 
         [Inject]
-        private IMessageService messageService { get; set; }
+        private IUserService userService { get; set; }
 
         private IEnumerable<Contact> contacts = Enumerable.Empty<Contact>();
 
         protected override async Task OnInitializedAsync()
         {
-            contacts = await messageService.GetContactsAsync(User.Id);
+            contacts = await userService.GetContactsAsync(User.Id);
         }
 
         private void SelectContactOnClick(MouseEventArgs e, Contact contact)
