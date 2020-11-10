@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MessengerApp.Api.Models;
 using MessengerApp.Api.Providers;
@@ -20,7 +21,10 @@ namespace MessengerApp.Api.Services
 
         public User GetUserByUsername(string username)
         {
-            throw new NotImplementedException();
+            return storageProvider
+                .SelectAllUsers()
+                .Where(user => user.UserName == username)
+                .FirstOrDefault();
         }
 
         public IEnumerable<User> GetUserContacts(Guid id)
@@ -28,9 +32,11 @@ namespace MessengerApp.Api.Services
             throw new NotImplementedException();
         }
 
-        public ValueTask<User> RegisterUserAsync(string username)
+        public async ValueTask<User> RegisterUserAsync(string username)
         {
-            throw new NotImplementedException();
+            var user = new User { UserName = username };
+
+            return await storageProvider.InsertUserAsync(user);
         }
     }
 }
