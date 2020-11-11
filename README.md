@@ -1,6 +1,14 @@
 # rabbitmq-postgres-dotnet
 
-Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
+Chat/Messenger application hosted in .NET Core
+
+## Technologies
+
+- .NET Core 3.1
+- SignalR
+- Postgres
+- Docker
+- <i>RabbitMQ (coming soon)</i>
 
 ## Pre-Requisites
 
@@ -33,11 +41,3 @@ Chat/Messenger application leveraging RabbitMQ messaging and PostgresSQL storage
 - Create new message queue
 - Copy `appsettings.json` into a new `appsettings.Development.json` file in the same location
 - Copy your newly create properties in the corresponding fields in `RabbitMQ` section
-
-## Known Issues
-
-- RabbitMQ.Client currently unable to connect (MessageProviderClient.cs). Using RabbitMQ API directly for now.
-- RabbitMQ currently returning 401 unauthorized for request
-
-Working Curl request
-`curl -XPOST -d'{"properties":{},"routing_key":"<Queue>","payload":"my body","payload_encoding":"string"}' http://<user>:<pass>@localhost:15672/api/exchanges/<virtualhost>/amq.default/publish`
