@@ -2,6 +2,8 @@
 
 Chat/Messenger application hosted in .NET Core
 
+![](./demo/ChatSimulation.gif)
+
 ## Technologies
 
 - .NET Core 3.1
